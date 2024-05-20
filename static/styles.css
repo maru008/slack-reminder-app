@@ -61,6 +61,7 @@ li {
 .command-box {
     flex-grow: 1;
     margin-left: 10px;
+    width: 100%; 
 }
 
 .date-time-input {
