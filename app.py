@@ -1,9 +1,14 @@
 import os
-
+import pytz
 from flask import Flask, render_template, request
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
+
+def get_current_time_in_timezone(timezone='Asia/Tokyo'):
+    tz = pytz.timezone(timezone)
+    return datetime.now(tz)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -17,7 +22,7 @@ def index():
         commands = generate_slack_commands(reminder_text, reminder_date, reminder_time, remind_when, channel_notify)
         return render_template('index.html', commands=commands, current_date=datetime.now().strftime('%Y-%m-%d'), current_time=datetime.now().strftime('%H:%M'))
 
-    return render_template('index.html', commands=[], current_date=datetime.now().strftime('%Y-%m-%d'), current_time=datetime.now().strftime('%H:%M'))
+    return render_template('index.html', commands=[], current_date=get_current_time_in_timezone().strftime('%Y-%m-%d'), current_time=get_current_time_in_timezone().strftime('%H:%M'))
 
 def generate_slack_commands(text, date, time, when_list, channel_notify):
     command_template = '/remind "{text}" {date} at {time}'
