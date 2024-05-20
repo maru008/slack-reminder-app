@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slack Reminder Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Slack Reminder Generator</h1>
+    <form id="reminder-form" method="POST">
+        <label for="reminder_text">リマインド内容:</label>
+        <input type="text" id="reminder_text" name="reminder_text" required>
+
+        <label for="reminder_date">締切日時:</label>
+        <input type="date" id="reminder_date" name="reminder_date" value="{{ current_date }}" required>
+
+        <label for="reminder_time">何時にリマインドするか:</label>
+        <input type="time" id="reminder_time" name="reminder_time" value="{{ current_time }}" required>
+
+        <label for="remind_when">いつするかの入力:</label>
+        <div id="remind_when" class="checkbox-group">
+            <label><input type="checkbox" name="remind_when" value="1_day"> 1日前</label>
+            <label><input type="checkbox" name="remind_when" value="2_days"> 2日前</label>
+            <label><input type="checkbox" name="remind_when" value="3_days"> 3日前</label>
+            <label><input type="checkbox" name="remind_when" value="1_week"> 1週間前</label>
+            <label><input type="checkbox" name="remind_when" value="2_weeks"> 2週間前</label>
+            <label><input type="checkbox" name="remind_when" value="3_weeks"> 3週間前</label>
+            <label><input type="checkbox" name="remind_when" value="1_month"> 1ヶ月前</label>
+        </div>
+
+        <label for="channel_notify">Channelに投稿する:</label>
+        <input type="checkbox" id="channel_notify" name="channel_notify" value="yes">
+
+        <button type="submit">生成</button>
+        <button type="button" onclick="resetForm()">リセット</button>
+    </form>
+
+    <div id="commands-container">
+        {% if commands %}
+        <h2>生成されたコマンド</h2>
+        <ul id="commands-list">
+            {% for command in commands %}
+            <li>
+                <button onclick="copyToClipboard('command-{{ loop.index }}')" id="copy-button-{{ loop.index }}">コピー</button>
+                <input type="text" value="{{ command }}" id="command-{{ loop.index }}" readonly>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+
+    <script>
+        function copyToClipboard(elementId) {
+            const inputElement = document.getElementById(elementId);
+            inputElement.select();
+            inputElement.setSelectionRange(0, 99999); // For mobile devices
+
+            try {
+                document.execCommand('copy');
+                const button = document.querySelector(`button[onclick="copyToClipboard('${elementId}')"]`);
+                button.textContent = 'コピーしました！';
+                button.style.backgroundColor = 'transparent';
+                button.style.color = 'black';
+                button.style.border = 'none';
+            } catch (err) {
+                alert('Failed to copy');
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('reminder-form').reset();
+            document.getElementById('commands-container').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

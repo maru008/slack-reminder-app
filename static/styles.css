@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input, select, button {
+    display: block;
+    margin-top: 5px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.form-group label {
+    margin-right: 10px;
+}
+
+button {
+    margin-top: 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.command-box {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+.date-time-input {
+    margin-bottom: 10px;
+}
+
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.checkbox-group label {
+    display: inline-flex;
+    align-items: center;
+}
+
+button[onclick^="copyToClipboard"] {
+    transition: all 0.3s ease;
+}
+
+button[onclick^="copyToClipboard"].copied {
+    background-color: transparent;
+    color: black;
+    border: none;
+}
