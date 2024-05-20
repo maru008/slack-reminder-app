@@ -18,7 +18,7 @@ https://blooming-falls-71077-b4f7ce20c543.herokuapp.com/
 ## 実際の動作例
 順序に従って入力すると以下のように複数のコマンドが生成されます．
 
-![出力の例](fig/output_ex.png)
+<img src="fig/output_ex.png" width="50%">
 
 ## 備考
 - 環境：Python(Flusk)，Html，CSS
