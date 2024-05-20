@@ -7,7 +7,8 @@ https://blooming-falls-71077-b4f7ce20c543.herokuapp.com/
 
 ## 使い方
 1. メッセージを入力    
-    - slackのリマインダーに送りたいメッセージを書きます．（00の締切など）
+    - slackのリマインダーに送りたいメッセージを書きます．（〇〇の締切など）
+    - このとき，channelをメンションするかどうかも決めれます（チェックを入れると冒頭に@channelが入力されます）
 2. 締切を入力
     - その締切の日時を入力，時刻も入力します．
 3. いつリマインドするかを生成
@@ -21,6 +22,6 @@ https://blooming-falls-71077-b4f7ce20c543.herokuapp.com/
 <img src="fig/output_ex.png" width="50%">
 
 ## 備考
-- 環境：Python(Flusk)，Html，CSS
-- デプロイ:Heroku
-- プルリク歓迎です
+- 環境: Python(Flusk)，html，CSS
+- デプロイ環境: Heroku
+- 何かあればgithub issueでお願いします🙏
