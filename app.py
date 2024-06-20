@@ -18,16 +18,21 @@ def index():
         reminder_time = request.form['reminder_time']
         remind_when = request.form.getlist('remind_when')
         channel_notify = 'channel_notify' in request.form
-
-        commands = generate_slack_commands(reminder_text, reminder_date, reminder_time, remind_when, channel_notify)
+        channel_name = request.form['channel_name']
+        
+        commands = generate_slack_commands(reminder_text, reminder_date, reminder_time, remind_when, channel_notify, channel_name)
         return render_template('index.html', commands=commands, current_date=datetime.now().strftime('%Y-%m-%d'), current_time=datetime.now().strftime('%H:%M'))
 
     return render_template('index.html', commands=[], current_date=get_current_time_in_timezone().strftime('%Y-%m-%d'), current_time=get_current_time_in_timezone().strftime('%H:%M'))
 
-def generate_slack_commands(text, date, time, when_list, channel_notify):
-    command_template = '/remind "{text}" {date} at {time}'
+def generate_slack_commands(text, date, time, when_list, channel_notify,channel_name):
+    if not channel_name.startswith('#'):
+        channel_name = f"#{channel_name}"
+    command_template = '/remind {channel} "{text}" {date} at {time}'
+    
     if channel_notify:
         text = f"@channel {text}"
+    
     commands = []
     date_obj = datetime.strptime(date, '%Y-%m-%d')
     for when in when_list:
@@ -57,10 +62,10 @@ def generate_slack_commands(text, date, time, when_list, channel_notify):
         
         calculated_date_str = calculated_date.strftime('%Y-%m-%d')
         text_with_days_before = f"{text} ({days_before}日前)"
-        commands.append(command_template.format(text=text_with_days_before, date=calculated_date_str, time=time))
+        commands.append(command_template.format(channel=channel_name, text=text_with_days_before, date=calculated_date_str, time=time))
     return commands
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 5002))
     app.run(host='0.0.0.0', port=port)
