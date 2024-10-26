@@ -1,0 +1,11 @@
+services:
+  flask-app:
+    build: .
+    ports:
+      - "5002:5002"  # ホストの5002ポートにマッピング
+    volumes:
+      - .:/app
+    environment:
+      FLASK_ENV: development
+      PORT: 5002  # 環境変数 PORT を設定
+    restart: always
